@@ -15,7 +15,7 @@ T = Text(root, height = 5, width = 52)
 T.pack()
 #Add a label
 
-label = Label(root, text="CHANGE ME!")
+label = Label(root, text="Save here")
 
 # Place widgets in window (with pack function!)
 label.pack()
