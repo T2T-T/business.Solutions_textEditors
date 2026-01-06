@@ -3,6 +3,10 @@ from tkinter import *
 from tkmacosx import Button
 def changeTitle():
 	root.title(T.get("1.0",END))
+profile_button.grid(row = 0, column = 0, columnspan = 4)
+
+name_label.grid(row=0, column=1)
+red_button.grid(row = 1, column = 1)
 # Create the main window
 root = Tk()
 root.title("Enter Title Here")
