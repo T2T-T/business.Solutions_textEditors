@@ -1,4 +1,4 @@
-`from tkinter import *
+from tkinter import *
 #need to install on all machines
 from tkmacosx import Button
 def changeTitle():
@@ -11,7 +11,7 @@ root.title("Enter Title Here")
 root.geometry("300x150")
 
 # Create buttons
-red_button = Button(root, text="Change Title", command=changeTitle)
+red_button = Button(root, text="Change Title!", command=changeTitle)
 T = Text(root, height = 5, width = 52)
 T.pack()
 #Add a label
