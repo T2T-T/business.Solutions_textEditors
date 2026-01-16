@@ -18,6 +18,7 @@ T = Text(root)
 # Place widgets in window (with pack function!)
 T.pack()
 red_button.pack()
+def read_file():
 with open("file.txt", "r") as f: 
 	content = f.read()
 	print(content)
