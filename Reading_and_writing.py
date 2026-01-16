@@ -3,7 +3,7 @@ from tkinter import *
 from tkmacosx import Button
 
 def write_file():
-	text_content = textbox.get("1.0",tk.END)
+	text_content = T.get("1.0",END)
 
 	with open("file.txt","w") as f:
 		f.write(text_content)
@@ -15,16 +15,16 @@ def read_file():
 
 		content =f.read()
 		print(content)
-		textbox.delete("1.0",tk.END)
-		textbox.insert("1.0,content")
-
+		T = Text(root)
+		T.delete("1.0", END)
+		T.insert("1.0,content")
 
 # Create the main window
 root = Tk()
 root.title("Reading and wrtiting")
 
 # Create buttons
-red_button = Button(root, text="Red", background='red', command=change_text)
+red_button = Button(root, text="Red", background='red', command=write_file)
 
 #Add a label
 T = Text(root)
