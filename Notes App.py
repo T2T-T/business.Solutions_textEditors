@@ -1,36 +1,50 @@
 from tkinter import *
-#need to install on all machines
+from tkinter import filedialog
 from tkmacosx import Button
 
-def write_file():
-	text_content = T.get("1.0",END)
+# Keep track of the currently opened file
+current_file = None
 
-	with open("file.txt","w") as f:
-		f.write(text_content)
+def open_file():
+    global current_file
+    current_file = filedialog.askopenfilename(
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+    )
 
-		print("Content written to file.")
+    if current_file:
+        with open(current_file, "r") as f:
+            content = f.read()
+            T.delete("1.0", END)
+            T.insert("1.0", content)
 
-def read_file():
-	with open("file.txt", "r") as f: 
+def save_file():
+    global current_file
+    if current_file is None:
+        current_file = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+        )
 
-		content =f.read()
-		print(content)
-		T = Text(root)
-		T.delete("1.0", END)
-		T.insert("1.0,content")
+    if current_file:
+        text_content = T.get("1.0", END)
+        with open(current_file, "w") as f:
+            f.write(text_content)
+        print("Content saved.")
 
 # Create the main window
 root = Tk()
 root.title("Notes")
 
-# Create buttons
-red_button = Button(root, text="Save", background='red', command=write_file)
+# Text widget
+T = Text(root, width=50, height=20)
+T.pack(pady=10)
 
-#Add a label
-T = Text(root)
-# Place widgets in window (with pack function!)
-T.pack()
-red_button.pack()
+# Buttons
+open_button = Button(root, text="Open", background="blue", command=open_file)
+save_button = Button(root, text="Save", background="red", command=save_file)
+
+open_button.pack(side=LEFT, padx=10)
+save_button.pack(side=LEFT, padx=10)
 
 # Start the GUI event loop
 root.mainloop()
