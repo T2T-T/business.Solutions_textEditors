@@ -1,0 +1,39 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import time
+
+driver = webdriver.Chrome()
+
+#Go to website
+driver.get("https://funny-jokes.netlify.app/")
+time.sleep(1)
+
+
+#Find the joke button
+jokeButton = driver.find_element(By.ID, "generator")
+
+#Set up the hover setting (move_to_element)
+hover = ActionChains(driver).move_to_element(jokeButton)
+
+
+hover.perform()
+time.sleep(2)
+jokeButton.click()
+time.sleep(3)
+
+
+jokeButton.click()
+time.sleep(3)
+jokeButton.click()
+
+time.sleep(3)
+jokeButton.click()
+
+
+time.sleep(4)
+
+
+
+driver.quit()
