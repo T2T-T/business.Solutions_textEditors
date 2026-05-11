@@ -1,18 +1,16 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 driver = webdriver.Chrome()
 
-# Makes the browser window full screen
 driver.maximize_window()
 
 website_url = "https://professoro1.github.io/"
 driver.get(website_url)
-
-# Wait for page to load
-time.sleep(2)
 
 pages_to_visit = [
     "https://professoro1.github.io/",
@@ -21,6 +19,7 @@ pages_to_visit = [
     "https://professoro1.github.io/pages/page3.html",
     "https://professoro1.github.io/pages/page4.html"
 ]
+
 for page in pages_to_visit:
     driver.get(page)
     print("Visited:", page)
@@ -29,11 +28,15 @@ for page in pages_to_visit:
 signup_page = "https://professoro1.github.io/pages/signup.html"
 driver.get(signup_page)
 
-time.sleep(2)
+# Wait until username field appears
+wait = WebDriverWait(driver, 10)
 
-username_box = driver.find_element(By.NAME, "username")
-email_box = driver.find_element(By.NAME, "email")
-password_box = driver.find_element(By.NAME, "password")
+username_box = wait.until(
+    EC.presence_of_element_located((By.ID, "username"))
+)
+
+email_box = driver.find_element(By.ID, "email")
+password_box = driver.find_element(By.ID, "password")
 
 username_box.send_keys("TurtleUser123")
 email_box.send_keys("turtleuser@gmail.com")
@@ -74,5 +77,4 @@ print("\nTurtle family names saved to turtle_families.txt")
 
 time.sleep(5)
 
-# Close the browser
 driver.quit()
