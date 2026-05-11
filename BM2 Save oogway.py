@@ -14,10 +14,11 @@ driver.get(website_url)
 
 pages_to_visit = [
     "https://professoro1.github.io/",
-    "https://professoro1.github.io/pages/page1.html",
-    "https://professoro1.github.io/pages/page2.html",
-    "https://professoro1.github.io/pages/page3.html",
-    "https://professoro1.github.io/pages/page4.html"
+    "https://professoro1.github.io/create1.html",
+    "https://professoro1.github.io/create2.html",
+    "https://professoro1.github.io/hello.html",
+    "https://www.scrapethissite.com/pages/frames/?frame=i"
+    "https://www.scrapethissite.com/pages/frames/?frame=i&family=Platysternidae"
 ]
 
 for page in pages_to_visit:
