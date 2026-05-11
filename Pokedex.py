@@ -1,64 +1,59 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# Install Playwright first:
+# pip install playwright
+# playwright install
 
-driver = webdriver.Chrome()
+from playwright.sync_api import sync_playwright
+import time
 
-try:
-    # Open Pokémon website
-    driver.get("https://www.pokemon.com/us/pokedex")
-    driver.maximize_window()
+with sync_playwright() as p:
+    # Launch browser
+    browser = p.chromium.launch(headless=False)
 
-    wait = WebDriverWait(driver, 15)
-    actions = ActionChains(driver)
+    # Create page
+    page = browser.new_page()
 
-    # -----------------------------
-    # DEFINE SEARCH BAR + CLICK IT
-    # -----------------------------
-    search_bar = wait.until(
-        EC.element_to_be_clickable((By.ID, "searchInput"))
+    # 1) Go to the link
+    page.goto("https://www.pokemon.com/us", wait_until="domcontentloaded")
+
+    # 2) Wait 2 seconds for page to load
+    time.sleep(2)
+
+    # 3) Hover over the “Pokedex” link in the Navigation Bar
+    page.hover("text=Pokedex")
+
+    # 4) Click on “Pokedex Hot List”
+    page.click("text=Pokedex Hot List")
+
+    # Wait for page to load
+    page.wait_for_load_state("domcontentloaded")
+
+    # Hover over white search bar under name and number
+    search_box = page.locator(
+        'input[type="search"], input[placeholder*="Name"], #searchInput'
     )
 
-    search_bar.click()
-    search_bar.clear()
-    search_bar.send_keys("Rayquaza")
+    search_box.hover()
 
-    # -----------------------------
-    # DEFINE SEARCH BUTTON + CLICK IT
-    # -----------------------------
-    search_button = wait.until(
-        EC.element_to_be_clickable((By.ID, "search"))
-    )
+    # Type "Rayquaza"
+    search_box.fill("Rayquaza")
 
-    search_button.click()
+    # Click on "Rayquaza"
+    page.click("text=Rayquaza")
 
-    # -----------------------------
-    # DEFINE RAYQUAZA CARD + CLICK IT
-    # -----------------------------
-    rayquaza_card = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//h5[contains(text(),'Rayquaza')]")
-        )
-    )
+    # Wait 2 seconds
+    time.sleep(2)
 
-    rayquaza_card.click()
+    # 5) On the "Rayquaza" page, click "Rayquaza"
+    page.click("text=Rayquaza")
 
-    # -----------------------------
-    # DEFINE MEGA RAYQUAZA BUTTON + CLICK IT
-    # -----------------------------
-    mega_rayquaza_button = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//*[contains(text(),'Mega Rayquaza')]")
-        )
-    )
+    # Click "Mega Rayquaza"
+    page.click("text=Mega Rayquaza")
 
-    mega_rayquaza_button.click()
+    # Wait 2 seconds
+    time.sleep(2)
 
-    print("Mega Rayquaza page opened successfully!")
+    # 6) Wait 5 seconds
+    time.sleep(5)
 
-    input("Press ENTER to close browser...")
-
-finally:
-    driver.quit()
+    # Close browser
+    browser.close()
