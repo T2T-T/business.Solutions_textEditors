@@ -38,7 +38,7 @@ username_box = wait.until(
 
 Password = driver.find_element(By.ID, "password")
 RapperName = driver.find_element(By.ID, "What would your turtle rapper name be?")
-FavoriteSnack = driver.find_element(By.ID "Favorite snack during a zombie apocalypse?")
+FavoriteSnack = driver.find_element(By.ID, "Favorite snack during a zombie apocalypse?")
 
 username_box.send_keys("TurtleUser123")
 Password.send_keys("turtleuser@gmail.com")
