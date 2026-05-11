@@ -1,53 +1,87 @@
-# Install Playwright first:
-# pip install playwright
-# playwright install
+# Install Selenium first:
+# pip install selenium
 
-from playwright.sync_api import sync_playwright
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
-with sync_playwright() as p:
-    # Launch browser
-    browser = p.chromium.launch(headless=False)
+# Launch Chrome browser
+driver = webdriver.Chrome()
 
-    # Create page
-    page = browser.new_page()
+# Maximize window
+driver.maximize_window()
 
+# Wait helper
+wait = WebDriverWait(driver, 15)
+
+try:
     # 1) Go to the link
-    page.goto("https://www.pokemon.com/us", wait_until="domcontentloaded")
+    driver.get("https://www.pokemon.com/us")
 
-    # 2) Wait 2 seconds for page to load
+    # 2) Wait 2 seconds for the page to load
     time.sleep(2)
 
     # 3) Hover over the “Pokedex” link in the Navigation Bar
-    page.hover("text=Pokedex")
-
-    # 4) Click on “Pokedex Hot List”
-    page.click("text=Pokedex Hot List")
-
-    # Wait for page to load
-    page.wait_for_load_state("domcontentloaded")
-
-    # Hover over white search bar under name and number
-    search_box = page.locator(
-        'input[type="search"], input[placeholder*="Name"], #searchInput'
+    pokedex_menu = wait.until(
+        EC.presence_of_element_located((By.LINK_TEXT, "Pokédex"))
     )
 
-    search_box.hover()
+    ActionChains(driver).move_to_element(pokedex_menu).perform()
+
+    # 4) Click on “Pokedex Hot List” link
+    hot_list = wait.until(
+        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Hot List"))
+    )
+
+    hot_list.click()
+
+    # Wait for page to load
+    time.sleep(2)
+
+    # Hover over the white search bar under name and number
+    search_box = wait.until(
+        EC.presence_of_element_located(
+            (By.CSS_SELECTOR, "input[type='search']")
+        )
+    )
+
+    ActionChains(driver).move_to_element(search_box).perform()
 
     # Type "Rayquaza"
-    search_box.fill("Rayquaza")
+    search_box.click()
+    search_box.clear()
+    search_box.send_keys("Rayquaza")
+
+    # Wait for search results
+    time.sleep(2)
 
     # Click on "Rayquaza"
-    page.click("text=Rayquaza")
+    rayquaza_result = wait.until(
+        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Rayquaza"))
+    )
+
+    rayquaza_result.click()
 
     # Wait 2 seconds
     time.sleep(2)
 
-    # 5) On the "Rayquaza" page, click "Rayquaza"
-    page.click("text=Rayquaza")
+    # 5) On the Rayquaza page, click “Rayquaza”
+    rayquaza_link = wait.until(
+        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Rayquaza"))
+    )
 
-    # Click "Mega Rayquaza"
-    page.click("text=Mega Rayquaza")
+    rayquaza_link.click()
+
+    # Click “Mega Rayquaza”
+    mega_rayquaza = wait.until(
+        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Mega Rayquaza"))
+    )
+
+    mega_rayquaza.click()
 
     # Wait 2 seconds
     time.sleep(2)
@@ -55,5 +89,6 @@ with sync_playwright() as p:
     # 6) Wait 5 seconds
     time.sleep(5)
 
+finally:
     # Close browser
-    browser.close()
+    driver.quit()
