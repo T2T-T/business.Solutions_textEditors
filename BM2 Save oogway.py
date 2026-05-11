@@ -18,7 +18,7 @@ pages_to_visit = [
     "https://professoro1.github.io/create2.html",
     "https://professoro1.github.io/hello.html",
     "https://www.scrapethissite.com/pages/frames/?frame=i"
-    "https://www.scrapethissite.com/pages/frames/?frame=i&family=Platysternidae"
+
 ]
 
 for page in pages_to_visit:
@@ -26,23 +26,24 @@ for page in pages_to_visit:
     print("Visited:", page)
     time.sleep(2)
 
-signup_page = "https://professoro1.github.io/pages/signup.html"
+signup_page = "https://professoro1.github.io/create1.html"
 driver.get(signup_page)
 
 # Wait until username field appears
 wait = WebDriverWait(driver, 10)
 
 username_box = wait.until(
-    EC.presence_of_element_located((By.ID, "username"))
+    EC.presence_of_element_located((By.ID, "Code Name"))
 )
 
-email_box = driver.find_element(By.ID, "email")
-password_box = driver.find_element(By.ID, "password")
+Password = driver.find_element(By.ID, "password")
+RapperName = driver.find_element(By.ID, "What would your turtle rapper name be?")
+FavoriteSnack = driver.find_element(By.ID "Favorite snack during a zombie apocalypse?")
 
 username_box.send_keys("TurtleUser123")
-email_box.send_keys("turtleuser@gmail.com")
-password_box.send_keys("SuperPassword123")
-
+Password.send_keys("turtleuser@gmail.com")
+RapperName.send_keys("SuperPassword123")
+FavoriteSnack.send_keys("Cookies")
 time.sleep(1)
 
 password_box.send_keys(Keys.RETURN)
