@@ -33,19 +33,19 @@ wait = WebDriverWait(driver, 10)
 
 # Locate elements
 username_box = wait.until(
-    EC.element_to_be_clickable((By.NAME, "username"))
+    EC.element_to_be_clickable((By.NAME, "Code Name"))
 )
 
-email_box = wait.until(
-    EC.element_to_be_clickable((By.NAME, "email"))
+password_box= wait.until(
+    EC.element_to_be_clickable((By.NAME, "Password"))
 )
 
-password_box = wait.until(
-    EC.element_to_be_clickable((By.NAME, "password"))
+Rapper_box = wait.until(
+    EC.element_to_be_clickable((By.NAME, "What would your turtle rapper name be?"))
 )
 
 snack_box = wait.until(
-    EC.element_to_be_clickable((By.NAME, "snack"))
+    EC.element_to_be_clickable((By.NAME, "Favorite snack during a zombie apocalypse?"))
 )
 
 # Click and type into username
@@ -54,14 +54,14 @@ username_box.clear()
 username_box.send_keys("TurtleUser123")
 
 # Click and type into email
-email_box.click()
-email_box.clear()
-email_box.send_keys("turtleuser@gmail.com")
-
-# Click and type into password
 password_box.click()
 password_box.clear()
-password_box.send_keys("SuperPassword123")
+password_box.send_keys("turtleuser@gmail.com")
+
+# Click and type into password
+Rapper_box.click()
+Rapper_box.clear()
+Rapper_box.send_keys("SuperPassword123")
 
 # Click and type into snack field
 snack_box.click()
