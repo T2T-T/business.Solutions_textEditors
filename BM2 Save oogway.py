@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -9,21 +8,11 @@ import time
 # Start browser
 driver = webdriver.Chrome()
 driver.maximize_window()
-
-# Mouse controller
-actions = ActionChains(driver)
+driver.get("https://professoro1.github.io/")
 
 # Website pages
-pages_to_visit = [
-    "https://professoro1.github.io/",
-    "https://professoro1.github.io/create1.html",
-]
+element = driver.find_element_by_id("Create Account")
 
-# Visit pages
-for page in pages_to_visit:
-    driver.get(page)
-    print("Visited:", page)
-    time.sleep(2)
 
 # Go to signup page
 signup_page = "https://professoro1.github.io/create1.html"
@@ -32,16 +21,16 @@ driver.get(signup_page)
 # Wait object
 wait = WebDriverWait(driver, 10)
 
-# Locate input fields
+# Locate elements
 username_box = wait.until(
     EC.element_to_be_clickable((By.NAME, "Code Name"))
 )
 
-password_box = wait.until(
+password_box= wait.until(
     EC.element_to_be_clickable((By.NAME, "Password"))
 )
 
-rapper_box = wait.until(
+Rapper_box = wait.until(
     EC.element_to_be_clickable((By.NAME, "What would your turtle rapper name be?"))
 )
 
@@ -49,35 +38,37 @@ snack_box = wait.until(
     EC.element_to_be_clickable((By.NAME, "Favorite snack during a zombie apocalypse?"))
 )
 
-# Function to move mouse, click, and type
-def mouse_click_and_type(element, text):
-    actions.move_to_element(element).click().perform()
-    time.sleep(0.5)
+# Click and type into username
+username_box.click()
+username_box.clear()
+username_box.send_keys("TurtleUser123")
 
-    element.clear()
-    element.send_keys(text)
+# Click and type into email
+password_box.click()
+password_box.clear()
+password_box.send_keys("turtleuser@gmail.com")
 
-# Fill form using mouse clicks
-mouse_click_and_type(username_box, "TurtleUser123")
-mouse_click_and_type(password_box, "turtleuser@gmail.com")
-mouse_click_and_type(rapper_box, "SuperPassword123")
-mouse_click_and_type(snack_box, "Cookies")
+# Click and type into password
+Rapper_box.click()
+Rapper_box.clear()
+Rapper_box.send_keys("SuperPassword123")
+
+# Click and type into snack field
+snack_box.click()
+snack_box.clear()
+snack_box.send_keys("Cookies")
 
 time.sleep(1)
 
 # Submit form
-snack_box.send_keys(Keys.RETURN)
+password_box.send_keys(Keys.RETURN)
 
 print("Account form submitted!")
 
 time.sleep(3)
 
 # Visit turtle page
-turtle_page = ["https://professoro1.github.io/pages/turtles.html"
-    "https://professoro1.github.io/create2.html",
-    "https://professoro1.github.io/hello.html",
-    "https://www.scrapethissite.com/pages/frames/?frame=i"
-]
+turtle_page = "https://professoro1.github.io/pages/turtles.html"
 driver.get(turtle_page)
 
 time.sleep(2)
