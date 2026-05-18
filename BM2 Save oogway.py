@@ -8,10 +8,13 @@ import time
 # Start browser
 driver = webdriver.Chrome()
 driver.maximize_window()
+time.sleep(1)
+
+
 driver.get("https://professoro1.github.io/")
 
 # Website pages
-element = driver.find_element_by_id("Create Account")
+CreateButton = driver.find_element(By.ID,"Create Account")
 
 
 # Go to signup page
