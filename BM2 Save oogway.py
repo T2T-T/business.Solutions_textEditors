@@ -1,144 +1,82 @@
-# pip install selenium webdriver-manager
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
 import time
 
-# Setup Chrome
-options = webdriver.ChromeOptions()
-options.add_argument("--start-maximized")
+driver = webdriver.Chrome()
 
-driver = webdriver.Chrome(
-    service=Service(ChromeDriverManager().install()),
-    options=options
+driver.maximize_window()
+
+website_url = "https://professoro1.github.io/"
+driver.get(website_url)
+
+pages_to_visit = [
+    "https://professoro1.github.io/",
+    "https://professoro1.github.io/create1.html",
+    "https://professoro1.github.io/create2.html",
+    "https://professoro1.github.io/hello.html",
+    "https://www.scrapethissite.com/pages/frames/?frame=i"
+
+]
+
+for page in pages_to_visit:
+    driver.get(page)
+    print("Visited:", page)
+    time.sleep(2)
+
+signup_page = "https://professoro1.github.io/create1.html"
+driver.get(signup_page)
+
+# Wait until username field appears
+wait = WebDriverWait(driver, 10)
+
+username_box = wait.until(
+    EC.presence_of_element_located((By.ID, "Code Name"))
 )
 
-wait = WebDriverWait(driver, 15)
-actions = ActionChains(driver)
+Password = driver.find_element(By.ID, "password")
+RapperName = driver.find_element(By.ID, "What would your turtle rapper name be?")
+FavoriteSnack = driver.find_element(By.ID, "Favorite snack during a zombie apocalypse?")
 
-try:
-    # Open website
-    driver.get("https://professoro1.github.io/")
+username_box.send_keys("TurtleUser123")
+Password.send_keys("turtleuser@gmail.com")
+RapperName.send_keys("SuperPassword123")
+FavoriteSnack.send_keys("Cookies")
+time.sleep(1)
 
-    # Click "Create Account"
-    create_account_btn = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//*[contains(text(),'Create Account')]")
-        )
-    )
-    actions.move_to_element(create_account_btn).click().perform()
+password_box.send_keys(Keys.RETURN)
 
-    # Fill Code Name
-    code_name = wait.until(
-        EC.presence_of_element_located(
-            (By.XPATH, "//input[contains(@placeholder,'Code') or contains(@name,'code')]")
-        )
-    )
-    actions.move_to_element(code_name).click().perform()
-    code_name.send_keys("T2")
+print("Account form submitted!")
 
-    # Fill Password
-    password = driver.find_element(
-        By.XPATH,
-        "//input[@type='password' or contains(@placeholder,'Password')]"
-    )
-    actions.move_to_element(password).click().perform()
-    password.send_keys("password")
+time.sleep(3)
 
-    # Security Question 1
-    turtle_rapper = driver.find_element(
-        By.XPATH,
-        "//input[contains(@placeholder,'turtle rapper') or contains(@name,'rapper')]"
-    )
-    actions.move_to_element(turtle_rapper).click().perform()
-    turtle_rapper.send_keys("T2T")
+turtle_page = "https://professoro1.github.io/pages/turtles.html"
+driver.get(turtle_page)
 
-    # Security Question 2
-    zombie_snack = driver.find_element(
-        By.XPATH,
-        "//input[contains(@placeholder,'zombie apocalypse') or contains(@name,'snack')]"
-    )
-    actions.move_to_element(zombie_snack).click().perform()
-    zombie_snack.send_keys("pizza")
+time.sleep(2)
 
-    # Click Continue
-    continue_btn = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//*[contains(text(),'Continue')]")
-        )
-    )
-    actions.move_to_element(continue_btn).click().perform()
+turtle_elements = driver.find_elements(By.TAG_NAME, "li")
 
-    # Cats ruled the world
-    cats_world = wait.until(
-        EC.presence_of_element_located(
-            (By.XPATH, "//input[contains(@placeholder,'cats ruled') or contains(@name,'cats')]")
-        )
-    )
-    actions.move_to_element(cats_world).click().perform()
-    cats_world.send_keys("Milk factory")
+turtle_families = []
 
-    pizza_topping = driver.find_element(
-        By.XPATH,
-        "//input[contains(@placeholder,'pizza topping') or contains(@name,'topping')]"
-    )
-    actions.move_to_element(pizza_topping).click().perform()
-    pizza_topping.send_keys("bacon")
+for turtle in turtle_elements:
+    turtle_name = turtle.text
 
+    if turtle_name != "":
+        turtle_families.append(turtle_name)
 
-    turtle_mission = driver.find_element(
-        By.XPATH,
-        "//input[contains(@placeholder,'secret mission') or contains(@name,'mission')]"
-    )
-    actions.move_to_element(turtle_mission).click().perform()
-    turtle_mission.send_keys("spy")
+print("\nTurtle Families:")
+for family in turtle_families:
+    print(family)
 
-    superhero_power = driver.find_element(
-        By.XPATH,
-        "//input[contains(@placeholder,'superhero power') or contains(@name,'power')]"
-    )
-    actions.move_to_element(superhero_power).click().perform()
-    superhero_power.send_keys("talking to fish")
+with open("turtle_families.txt", "w") as file:
+    for family in turtle_families:
+        file.write(family + "\n")
 
-    final_create_btn = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//*[contains(text(),'Create Account')]")
-        )
-    )
-    actions.move_to_element(final_create_btn).click().perform()
+print("\nTurtle family names saved to turtle_families.txt")
 
+time.sleep(5)
 
-    enter_turtle_btn = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//*[contains(text(),'Enter the Turtle')]")
-        )
-    )
-    actions.move_to_element(enter_turtle_btn).click().perform()
-
-
-    cheloniidae = wait.until(
-        EC.presence_of_element_located(
-            (By.XPATH, "//*[contains(text(),'Cheloniidae')]")
-        )
-    )
-
-    actions.move_to_element(cheloniidae).perform()
-
-    learn_more = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//*[contains(text(),'Learn More')]")
-        )
-    )
-    actions.move_to_element(learn_more).click().perform()
-
-
-    time.sleep(5)
-
-finally:
-
-    driver.quit()
+driver.quit()
