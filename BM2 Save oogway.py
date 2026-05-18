@@ -17,9 +17,6 @@ actions = ActionChains(driver)
 pages_to_visit = [
     "https://professoro1.github.io/",
     "https://professoro1.github.io/create1.html",
-    "https://professoro1.github.io/create2.html",
-    "https://professoro1.github.io/hello.html",
-    "https://www.scrapethissite.com/pages/frames/?frame=i"
 ]
 
 # Visit pages
@@ -76,7 +73,11 @@ print("Account form submitted!")
 time.sleep(3)
 
 # Visit turtle page
-turtle_page = "https://professoro1.github.io/pages/turtles.html"
+turtle_page = ["https://professoro1.github.io/pages/turtles.html"
+    "https://professoro1.github.io/create2.html",
+    "https://professoro1.github.io/hello.html",
+    "https://www.scrapethissite.com/pages/frames/?frame=i"
+]
 driver.get(turtle_page)
 
 time.sleep(2)
