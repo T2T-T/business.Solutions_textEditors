@@ -58,3 +58,32 @@ CreateAccount_button =driver.find_element(By.XPATH, "/html/body/div/button")
 CreateAccount_button.click()
 time.sleep(1)
 
+Enter_turtle = driver.find_element(By.XPATH, "/html/body/button")
+Enter_turtle.click()
+time.sleep(2)
+
+Cheloniidae = driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/a")
+Cheloniidae.click()
+
+try:
+    driver.get("https://professoro1.github.io/")
+    time.sleep(2)  # Allow page to load
+
+    family_elements = driver.find_elements(By.XPATH, "//table//td/b/a | //table//td[1]")
+    
+    # Extract text from elements
+    family_names = [element.text for element in family_elements if element.text]
+
+
+    with open("turtle_families.txt", "w") as file:
+        for name in family_names:
+            file.write(name + "\n")
+            
+    print(f"Successfully scraped {len(family_names)} families and saved to turtle_families.txt.")
+
+finally:
+   
+    time.sleep(5)
+    driver.quit()
+
+
