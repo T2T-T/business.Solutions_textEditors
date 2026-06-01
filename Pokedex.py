@@ -5,105 +5,36 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# -----------------------------
-# Setup Chrome WebDriver
-# -----------------------------
-options = webdriver.ChromeOptions()
-options.add_argument("--start-maximized")
+driver = webdriver.Chrome()
+driver.maximize_window()
+time.sleep(1)
 
-driver = webdriver.Chrome(options=options)
-wait = WebDriverWait(driver, 15)
+
+driver.get("https://www.nfl.com/")
+
+Acknoledge = driver.find_element(By.ID, 'onetrust-accept-btn-handler')
+Acknoledge.click()
+
+Games= driver.find_element(By.XPATH, '//*[@id="headlessui-popover-button-_R_6qb5kinpfdb_"]/span[1]')
+# 2. Initialize ActionChains
 actions = ActionChains(driver)
+actions.move_to_element(Games)
 
-try:
-    # 1) Go to the link
-    driver.get("https://www.marvelrivals.com")
+actions.perform()
+time.sleep(3)
 
-    # 2) Wait 2 seconds for the page to load
-    time.sleep(2)
+Schedule = driver.find_element(By.XPATH, '//*[@id="headlessui-popover-panel-_R_aqb5kinpfdb_"]/ul/li[1]/div/ul/li[1]/a/span')
+Schedule.click()
+time.sleep(2)
 
-    # --------------------------------------------------------
-    # NOTE:
-    # The following steps reference "Pokedex" and "Rayquaza",
-    # which are NOT present on marvelrivals.com.
-    # These selectors are placeholders and may need updating.
-    # --------------------------------------------------------
+Week1 =driver.find_element(By.XPATH, '//*[@id="headlessui-tabs-panel-_R_qld8ninpfdb_"]/div[1]/div[2]/div[1]/ul/li/div/a')
+Week1.click()
+time.sleep(2)
 
-    # 3) Hover over the “pokedex” link in the Navigation Bar
-    pokedex_link = wait.until(
-        EC.presence_of_element_located((By.LINK_TEXT, "Pokedex"))
-    )
-
-    actions.move_to_element(pokedex_link).perform()
-
-    # 4) Click on “pokedex hot list” link
-    hot_list = wait.until(
-        EC.element_to_be_clickable((By.LINK_TEXT, "Pokedex Hot List"))
-    )
-    hot_list.click()
-
-    # Hover over white search bar and type "Rayquaza"
-    search_box = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "input"))
-    )
-
-    actions.move_to_element(search_box).click().perform()
-
-    search_box.clear()
-    search_box.send_keys("Rayquaza")
-
-    # Click the Rayquaza result
-    rayquaza_result = wait.until(
-        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Rayquaza"))
-    )
-    rayquaza_result.click()
-
-    # Wait 2 seconds
-    time.sleep(2)
-
-    # 5) On Rayquaza page, click “Rayquaza”
-    rayquaza_page_link = wait.until(
-        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Rayquaza"))
-    )
-    rayquaza_page_link.click()
-
-    # Click “Mega Rayquaza”
-    mega_rayquaza = wait.until(
-        EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Mega Rayquaza"))
-    )
-    mega_rayquaza.click()
-
-    # Wait 2 seconds
-    time.sleep(2)
-
-    # 6) Wait 5 seconds
-    time.sleep(5)
-
-finally:
-    # Close browser
-    driver.quit()
-
-
-# ============================================
-# NFL Stats Selenium Example
-# ============================================
-
-nfl_driver = webdriver.Chrome(options=options)
-
-try:
-    nfl_driver.get("https://www.nfl.com/stats/")
-
-    # Wait until page loads
-    WebDriverWait(nfl_driver, 15).until(
-        EC.presence_of_element_located((By.TAG_NAME, "body"))
-    )
-
-    print("NFL stats page loaded successfully")
-    print("Page Title:", nfl_driver.title)
-
-    # Wait 5 seconds
-    time.sleep(5)
-
-finally:
-    # Close NFL browser
-    nfl_driver.quit()
+tabs = driver.window_handles
+time.sleep(2)
+driver.switch_to.window(tabs[1])
+time.sleep(1)
+Buy_Tickets = driver.find_element(By.XPATH,'//*[@id="ticket-card-a8fb0d78-4feb-11f1-abca-2c54536568a9"]/a')
+Buy_Tickets.click()
+time.sleep(2)
