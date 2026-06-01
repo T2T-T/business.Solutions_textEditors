@@ -12,8 +12,8 @@ time.sleep(1)
 
 driver.get("https://www.nfl.com/")
 
-Acknoledge = driver.find_element(By.ID, 'onetrust-accept-btn-handler')
-Acknoledge.click()
+#Acknoledge = driver.find_element(By.ID, 'onetrust-accept-btn-handler')
+#Acknoledge.click()
 
 Games= driver.find_element(By.XPATH, '//*[@id="headlessui-popover-button-_R_6qb5kinpfdb_"]/span[1]')
 # 2. Initialize ActionChains
@@ -31,10 +31,5 @@ Week1 =driver.find_element(By.XPATH, '//*[@id="headlessui-tabs-panel-_R_qld8ninp
 Week1.click()
 time.sleep(2)
 
-tabs = driver.window_handles
-time.sleep(2)
-driver.switch_to.window(tabs[1])
-time.sleep(1)
-Buy_Tickets = driver.find_element(By.XPATH,'//*[@id="ticket-card-a8fb0d78-4feb-11f1-abca-2c54536568a9"]/a')
-Buy_Tickets.click()
-time.sleep(2)
+driver.get("https://www.ticketmaster.com/event/0F006482E67E7496?wt.mc_id=NFL_LEAGUE_SCHED_PG_SEA_LINK3&utm_source=NFL.com&utm_medium=client&utm_campaign=NFL_LEAGUE&utm_content=SCHED_PG_SEA_LINK3&campaign=sea-ti-iw-sp-2072738")
+time.sleep(3)
