@@ -1,0 +1,29 @@
+PAGE 1
+Title: Pokémon
+
+PAGE 2
+Title: Pikachu
+
+PAGE 3
+Title: Charizard
+
+PAGE 4
+Title: Bulbasaur
+
+PAGE 5
+Title: Squirtle
+
+SCRAPED DATA
+-----------------
+1. Pokémon
+2. Pikachu
+3. Charizard
+4. Bulbasaur
+5. Squirtle
+
+FIRST 5 LINKS FOUND:
+https://en.wikipedia.org/wiki/Squirtle#bodyContent
+https://en.wikipedia.org/wiki/Main_Page
+https://en.wikipedia.org/wiki/Wikipedia:Contents
+https://en.wikipedia.org/wiki/Portal:Current_events
+https://en.wikipedia.org/wiki/Special:Random

@@ -1,50 +1,58 @@
-from tkinter import *
-from tkinter import filedialog
-from tkmacosx import Button
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 
-# Keep track of the currently opened file
-current_file = None
+# Open browser
+driver = webdriver.Chrome()
 
-def open_file():
-    global current_file
-    current_file = filedialog.askopenfilename(
-        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
-    )
+# Open Wikipedia
+driver.get("https://www.wikipedia.org/")
+time.sleep(2)
 
-    if current_file:
-        with open(current_file, "r") as f:
-            content = f.read()
-            T.delete("1.0", END)
-            T.insert("1.0", content)
+# Search Pokemon
+SearchBox = driver.find_element(By.ID, "searchInput")
+SearchBox.send_keys("Pokemon")
+SearchBox.send_keys(Keys.RETURN)
+time.sleep(2)
 
-def save_file():
-    global current_file
-    if current_file is None:
-        current_file = filedialog.asksaveasfilename(
-            defaultextension=".txt",
-            filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
-        )
+# Open file
+file = open("PokemonInfo.txt", "w")
 
-    if current_file:
-        text_content = T.get("1.0", END)
-        with open(current_file, "w") as f:
-            f.write(text_content)
-        print("Content saved.")
+# Data 1
+Title1 = driver.find_element(By.ID, "firstHeading").text
+file.write(Title1 + "\n")
 
-# Create the main window
-root = Tk()
-root.title("Notes")
+# Page 2
+Pikachu = driver.find_element(By.PARTIAL_LINK_TEXT, "Pikachu")
+Pikachu.click()
+time.sleep(2)
 
-# Text widget
-T = Text(root, width=50, height=20)
-T.pack(pady=10)
+Title2 = driver.find_element(By.ID, "firstHeading").text
+file.write(Title2 + "\n")
 
-# Buttons
-open_button = Button(root, text="Open", background="blue", command=open_file)
-save_button = Button(root, text="Save", background="red", command=save_file)
+# Page 3
+driver.get("https://en.wikipedia.org/wiki/Charizard")
+time.sleep(2)
 
-open_button.pack(side=LEFT, padx=10)
-save_button.pack(side=LEFT, padx=10)
+Title3 = driver.find_element(By.ID, "firstHeading").text
+file.write(Title3 + "\n")
 
-# Start the GUI event loop
-root.mainloop()
+# Page 4
+driver.get("https://en.wikipedia.org/wiki/Bulbasaur")
+time.sleep(2)
+
+Title4 = driver.find_element(By.ID, "firstHeading").text
+file.write(Title4 + "\n")
+
+# Page 5
+driver.get("https://en.wikipedia.org/wiki/Squirtle")
+time.sleep(2)
+
+Title5 = driver.find_element(By.ID, "firstHeading").text
+file.write(Title5 + "\n")
+
+file.close()
+
+time.sleep(5)
+driver.quit()
